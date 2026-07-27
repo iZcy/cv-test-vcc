@@ -1,5 +1,7 @@
 node_modules/
 cv.db
+cv.db-shm
+cv.db-wal
 .env
 public/uploads/*
 !public/uploads/.gitkeep
