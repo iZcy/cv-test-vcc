@@ -1,0 +1,76 @@
+  <footer class="footer_area p_120">
+    <div class="container">
+      <div class="row footer_inner">
+        <div class="col-lg-5 col-sm-6">
+          <aside class="f_widget ab_widget">
+            <div class="f_title"><h3>About Me</h3></div>
+            <p><%= profile ? profile.bio : '' %></p>
+            <p>Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved.</p>
+          </aside>
+        </div>
+        <div class="col-lg-5 col-sm-6">
+          <aside class="f_widget news_widget">
+            <div class="f_title"><h3>Contact</h3></div>
+            <p><i class="fa fa-envelope"></i> <%= profile ? profile.email : '' %></p>
+            <p><i class="fa fa-phone"></i> <%= profile ? profile.phone : '' %></p>
+            <p><i class="fa fa-map-marker"></i> <%= profile ? profile.location : '' %></p>
+          </aside>
+        </div>
+        <div class="col-lg-2 col-sm-6">
+          <aside class="f_widget social_widget">
+            <div class="f_title"><h3>Follow Me</h3></div>
+            <p>Let's connect</p>
+            <ul class="list">
+              <% if (profile && profile.linkedin) { %><li><a href="<%= profile.linkedin %>" target="_blank"><i class="fa fa-linkedin"></i></a></li><% } %>
+              <% if (profile && profile.github) { %><li><a href="<%= profile.github %>" target="_blank"><i class="fa fa-github"></i></a></li><% } %>
+              <% if (profile && profile.email) { %><li><a href="mailto:<%= profile.email %>"><i class="fa fa-envelope"></i></a></li><% } %>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+    console.log('=== FRONTEND LOG ===');
+    console.log('[Halaman] CV Website berhasil dimuat!');
+    console.log('[Halaman] Waktu load:', new Date().toLocaleString());
+
+    console.log('[Data] Profile:', {
+      name: '<%= profile ? profile.name.replace(/'/g, "\\'") : "" %>',
+      title: '<%= profile ? profile.title.replace(/'/g, "\\'") : "" %>',
+      email: '<%= profile ? profile.email.replace(/'/g, "\\'") : "" %>'
+    });
+    console.log('[Data] Total Experience:', <%= experiences ? experiences.length : 0 %>);
+    console.log('[Data] Total Education:', <%= education ? education.length : 0 %>);
+    console.log('[Data] Total Skills:', <%= skills ? skills.length : 0 %>);
+    console.log('[Data] Kategori Skills:', <%= JSON.stringify(categories || []) %>);
+
+    $(window).on('scroll', function () {
+      var scrollTop = $(window).scrollTop();
+      if (scrollTop > 70) {
+        console.log('[Scroll] Fixed navbar activated (scroll > 70px)');
+        $('.header_area').addClass('navbar_fixed');
+      } else {
+        $('.header_area').removeClass('navbar_fixed');
+      }
+    });
+
+    $('.nav-link[href^="#"]').on('click', function(e) {
+      e.preventDefault();
+      var target = $($(this).attr('href'));
+      console.log('[Navigasi] Scroll ke:', $(this).attr('href'));
+      $('html, body').animate({ scrollTop: target.offset().top - 80 }, 500, function() {
+        console.log('[Navigasi] Sampai di:', $(this).attr('href'));
+      });
+    });
+
+    $('.banner_btn').on('click', function(e) {
+      console.log('[Tombol] Banner button diklik:', $(this).text());
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edit Profile - Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Roboto:400,500" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/admin.css">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <%- include('sidebar') %>
+    <main class="admin-main">
+      <div class="admin-header">
+        <h2>Edit Profile</h2>
+      </div>
+      <% if (success) { %><div class="alert alert-success"><%= success %></div><% } %>
+      <% if (error) { %><div class="alert alert-error"><%= error %></div><% } %>
+      <form method="POST" action="/admin/profile" enctype="multipart/form-data" class="admin-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nama Lengkap</label>
+            <input type="text" name="name" value="<%= profile.name %>" required>
+          </div>
+          <div class="form-group">
+            <label>Title / Posisi</label>
+            <input type="text" name="title" value="<%= profile.title %>" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Bio / Tentang Kamu</label>
+          <textarea name="bio" rows="4"><%= profile.bio %></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" value="<%= profile.email %>">
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="text" name="phone" value="<%= profile.phone %>">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" name="location" value="<%= profile.location %>">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>LinkedIn URL</label>
+            <input type="url" name="linkedin" value="<%= profile.linkedin %>">
+          </div>
+          <div class="form-group">
+            <label>GitHub URL</label>
+            <input type="url" name="github" value="<%= profile.github %>">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Website</label>
+          <input type="url" name="website" value="<%= profile.website %>">
+        </div>
+        <div class="form-group">
+          <label>Foto Profil</label>
+          <input type="file" name="photo" accept="image/*">
+          <% if (profile.photo) { %>
+          <div class="current-photo">
+            <img src="<%= profile.photo %>" alt="Current photo" style="max-width:100px; margin-top:10px; border-radius:5px;">
+          </div>
+          <% } %>
+        </div>
+        <button type="submit" class="btn btn-primary">Simpan Profile</button>
+      </form>
+    </main>
+  </div>
+  <script>
+    console.log('[Admin Profile] Halaman edit profil dimuat');
+    console.log('[Admin Profile] Data saat ini:', {
+      name: '<%= profile.name %>',
+      title: '<%= profile.title %>',
+      email: '<%= profile.email %>'
+    });
+    document.querySelector('form').addEventListener('submit', function() {
+      console.log('[Admin Profile] Form profil dikirim');
+      console.log('[Admin Profile] Nama:', document.querySelector('input[name="name"]').value);
+      console.log('[Admin Profile] Title:', document.querySelector('input[name="title"]').value);
+    });
+  </script>
+</body>
+</html>

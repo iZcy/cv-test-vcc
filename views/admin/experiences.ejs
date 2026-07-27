@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Experience - Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Roboto:400,500" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/admin.css">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <%- include('sidebar') %>
+    <main class="admin-main">
+      <div class="admin-header">
+        <h2>Experience</h2>
+      </div>
+
+      <h3>Tambah Baru</h3>
+      <form method="POST" action="/admin/experiences" class="admin-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Posisi</label>
+            <input type="text" name="position" required>
+          </div>
+          <div class="form-group">
+            <label>Perusahaan</label>
+            <input type="text" name="company" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Location</label>
+            <input type="text" name="location">
+          </div>
+          <div class="form-group">
+            <label>Order Index</label>
+            <input type="number" name="order_index" value="0">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Start Date</label>
+            <input type="text" name="start_date" placeholder="2022-01" required>
+          </div>
+          <div class="form-group">
+            <label>End Date</label>
+            <input type="text" name="end_date" placeholder="2024-06 (kosongkan jika masih)">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" name="current" value="1"> Masih bekerja disini
+          </label>
+        </div>
+        <div class="form-group">
+          <label>Deskripsi</label>
+          <textarea name="description" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Tambah</button>
+      </form>
+
+      <hr>
+
+      <h3>Daftar Experience</h3>
+      <table class="admin-table">
+        <thead>
+          <tr><th>Posisi</th><th>Perusahaan</th><th>Periode</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <% experiences.forEach(function(exp) { %>
+          <tr>
+            <form method="POST" action="/admin/experiences/update/<%= exp.id %>">
+              <td><input type="text" name="position" value="<%= exp.position %>" style="width:100%"></td>
+              <td><input type="text" name="company" value="<%= exp.company %>" style="width:100%"></td>
+              <td>
+                <input type="text" name="start_date" value="<%= exp.start_date %>" style="width:70px">
+                -
+                <input type="text" name="end_date" value="<%= exp.end_date || '' %>" style="width:70px">
+              </td>
+              <td class="action-cell">
+                <input type="hidden" name="location" value="<%= exp.location %>">
+                <input type="hidden" name="current" value="<%= exp.current %>">
+                <input type="hidden" name="description" value="<%= exp.description %>">
+                <input type="hidden" name="order_index" value="<%= exp.order_index %>">
+                <button type="submit" class="btn btn-sm btn-primary">Update</button>
+            </form>
+            <form method="POST" action="/admin/experiences/delete/<%= exp.id %>" style="display:inline">
+              <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Hapus?')">Hapus</button>
+            </form>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </main>
+  </div>
+  <script>
+    console.log('[Admin Experience] Halaman dikelola');
+    console.log('[Admin Experience] Total data:', document.querySelectorAll('tbody tr').length);
+    console.log('[Admin Experience] Menampilkan', '<%= experiences.length %>', 'experience');
+    document.querySelectorAll('.btn-danger').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        console.log('[Admin Experience] Menghapus data');
+      });
+    });
+  </script>
+</body>
+</html>

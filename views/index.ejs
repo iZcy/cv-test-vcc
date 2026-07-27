@@ -1,0 +1,230 @@
+<%- include('header') %>
+<!--================Home Banner Area =================-->
+<section class="home_banner_area">
+  <div class="banner_inner">
+    <div class="container">
+      <div class="row banner_content">
+        <div class="col-lg-6">
+          <div class="home_left_img">
+            <% if (profile && profile.photo) { %>
+            <img src="<%= profile.photo %>" alt="">
+            <% } else { %>
+            <div class="avatar-placeholder"><i class="fa fa-user"></i></div>
+            <% } %>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="banner_content_text">
+            <h5>This is me</h5>
+            <h2><%= profile ? profile.name : 'Nama Kamu' %></h2>
+            <p><%= profile ? profile.title : 'Web Developer' %></p>
+            <p><%= profile ? profile.bio : 'Tulis bio singkat di sini.' %></p>
+            <a class="banner_btn" href="#contact">Contact Me</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--================End Home Banner Area =================-->
+
+<!--================Welcome Area =================-->
+<section class="welcome_area p_120" id="about">
+  <div class="container">
+    <div class="main_title">
+      <h2>About Myself</h2>
+      <p><%= profile ? profile.bio : '' %></p>
+    </div>
+    <div class="row welcome_inner">
+      <div class="col-lg-12">
+        <div class="welcome_text">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="wel_item">
+                <i class="fa fa-briefcase"></i>
+                <h4><%= experiences.length %></h4>
+                <p>Experience</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="wel_item">
+                <i class="fa fa-graduation-cap"></i>
+                <h4><%= education.length %></h4>
+                <p>Education</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="wel_item">
+                <i class="fa fa-cogs"></i>
+                <h4><%= skills.length %></h4>
+                <p>Skills</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--================End Welcome Area =================-->
+
+<!--================Feature Area =================-->
+<section class="feature_area p_120" id="experience">
+  <div class="container">
+    <div class="main_title">
+      <h2>Experience</h2>
+      <p>My professional journey</p>
+    </div>
+    <div class="feature_inner row">
+      <% experiences.forEach(function(exp) { %>
+      <div class="col-lg-6">
+        <div class="feature_item">
+          <div class="exp-header">
+            <h4><%= exp.position %></h4>
+            <span class="exp-company"><%= exp.company %></span>
+            <span class="exp-location"><i class="fa fa-map-marker"></i> <%= exp.location %></span>
+          </div>
+          <div class="exp-date">
+            <i class="fa fa-calendar"></i> <%= exp.start_date %> - <%= exp.current ? 'Present' : exp.end_date %>
+          </div>
+          <p><%= exp.description %></p>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<!--================End Feature Area =================-->
+
+<!--================Education Area =================-->
+<section class="projects_area p_120" id="education">
+  <div class="container">
+    <div class="main_title">
+      <h2>Education</h2>
+      <p>My academic background</p>
+    </div>
+    <div class="row projects_inner">
+      <% education.forEach(function(edu) { %>
+      <div class="col-lg-6">
+        <div class="projects_item">
+          <div class="projects_text">
+            <h4><%= edu.degree %></h4>
+            <p><strong><%= edu.institution %></strong></p>
+            <p><%= edu.field %></p>
+            <p class="edu-date"><i class="fa fa-calendar"></i> <%= edu.start_year %> - <%= edu.end_year || 'Present' %></p>
+            <p><%= edu.description %></p>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<!--================End Education Area =================-->
+
+<!--================Skills Area =================-->
+<section class="testimonials_area p_120" id="skills">
+  <div class="container">
+    <div class="main_title">
+      <h2>My Skills</h2>
+      <p>Technologies and tools I work with</p>
+    </div>
+    <div class="row">
+      <% categories.forEach(function(cat) { %>
+      <div class="col-lg-6">
+        <div class="tools_expert">
+          <h3><%= cat %></h3>
+          <div class="skill_main">
+            <% skills.filter(function(s) { return s.category === cat; }).forEach(function(skill) { %>
+            <div class="skill_item">
+              <h4><%= skill.name %> <span class="counter"><%= skill.level %></span>%</h4>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: <%= skill.level %>%" aria-valuenow="<%= skill.level %>" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<!--================End Skills Area =================-->
+
+<!--================Contact Area =================-->
+<section class="contact_area p_120" id="contact">
+  <div class="container">
+    <div class="main_title">
+      <h2>Contact Me</h2>
+      <p>Let's work together</p>
+    </div>
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="contact_info">
+          <div class="info_item">
+            <i class="fa fa-envelope"></i>
+            <h6><%= profile ? profile.email : '' %></h6>
+            <p>Email</p>
+          </div>
+          <div class="info_item">
+            <i class="fa fa-phone"></i>
+            <h6><%= profile ? profile.phone : '' %></h6>
+            <p>Phone</p>
+          </div>
+          <div class="info_item">
+            <i class="fa fa-map-marker"></i>
+            <h6><%= profile ? profile.location : '' %></h6>
+            <p>Location</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <form action="mailto:<%= profile ? profile.email : '' %>" method="post" enctype="text/plain" class="contact_form" id="contactForm">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Your Name" id="contactName" required>
+          </div>
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Your Email" id="contactEmail" required>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Subject" id="contactSubject" required>
+          </div>
+          <div class="form-group">
+            <textarea class="form-control" rows="5" placeholder="Message" id="contactMessage" required></textarea>
+          </div>
+          <button type="submit" class="banner_btn">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<!--================End Contact Area =================-->
+<%- include('footer') %>
+
+<script>
+  console.log('[Frontend] Section About dimuat - stat:', {
+    experience: <%= experiences.length %>,
+    education: <%= education.length %>,
+    skills: <%= skills.length %>
+  });
+
+  <% experiences.forEach(function(exp) { %>
+  console.log('[Frontend] Experience:', '<%= exp.position %> @ <%= exp.company %> (<%= exp.start_date %> - <%= exp.current ? "Present" : exp.end_date %>)');
+  <% }); %>
+
+  <% education.forEach(function(edu) { %>
+  console.log('[Frontend] Education:', '<%= edu.degree %> - <%= edu.institution %>');
+  <% }); %>
+
+  <% categories.forEach(function(cat) { %>
+  console.log('[Frontend] Skill Category:', '<%= cat %>');
+  <% }); %>
+
+  $('#contactForm').on('submit', function(e) {
+    console.log('[Frontend] Contact form dikirim');
+    console.log('[Frontend] Nama:', $('#contactName').val());
+    console.log('[Frontend] Email:', $('#contactEmail').val());
+    console.log('[Frontend] Subjek:', $('#contactSubject').val());
+  });
+</script>

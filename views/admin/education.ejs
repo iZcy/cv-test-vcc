@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Education - Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Roboto:400,500" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/admin.css">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <%- include('sidebar') %>
+    <main class="admin-main">
+      <div class="admin-header">
+        <h2>Education</h2>
+      </div>
+
+      <h3>Tambah Baru</h3>
+      <form method="POST" action="/admin/education" class="admin-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Gelar / Degree</label>
+            <input type="text" name="degree" required>
+          </div>
+          <div class="form-group">
+            <label>Institusi</label>
+            <input type="text" name="institution" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Bidang / Jurusan</label>
+            <input type="text" name="field">
+          </div>
+          <div class="form-group">
+            <label>Order Index</label>
+            <input type="number" name="order_index" value="0">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tahun Mulai</label>
+            <input type="text" name="start_year" placeholder="2016" required>
+          </div>
+          <div class="form-group">
+            <label>Tahun Selesai</label>
+            <input type="text" name="end_year" placeholder="2020 (kosongkan jika masih)">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Deskripsi</label>
+          <textarea name="description" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Tambah</button>
+      </form>
+
+      <hr>
+
+      <h3>Daftar Pendidikan</h3>
+      <table class="admin-table">
+        <thead>
+          <tr><th>Degree</th><th>Institusi</th><th>Tahun</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <% education.forEach(function(edu) { %>
+          <tr>
+            <form method="POST" action="/admin/education/update/<%= edu.id %>">
+              <td><input type="text" name="degree" value="<%= edu.degree %>" style="width:100%"></td>
+              <td><input type="text" name="institution" value="<%= edu.institution %>" style="width:100%"></td>
+              <td>
+                <input type="text" name="start_year" value="<%= edu.start_year %>" style="width:55px">
+                -
+                <input type="text" name="end_year" value="<%= edu.end_year || '' %>" style="width:55px">
+              </td>
+              <td class="action-cell">
+                <input type="hidden" name="field" value="<%= edu.field %>">
+                <input type="hidden" name="description" value="<%= edu.description %>">
+                <input type="hidden" name="order_index" value="<%= edu.order_index %>">
+                <button type="submit" class="btn btn-sm btn-primary">Update</button>
+            </form>
+            <form method="POST" action="/admin/education/delete/<%= edu.id %>" style="display:inline">
+              <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Hapus?')">Hapus</button>
+            </form>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </main>
+  </div>
+  <script>
+    console.log('[Admin Education] Halaman dikelola');
+    console.log('[Admin Education] Total data:', '<%= education.length %>');
+    document.querySelectorAll('.btn-danger').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        console.log('[Admin Education] Menghapus data');
+      });
+    });
+  </script>
+</body>
+</html>
